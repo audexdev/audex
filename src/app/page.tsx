@@ -8,19 +8,18 @@ import Profile from './profile';
 
 type Phase = 'booting' | 'loaded' | 'projects';
 
-const dev: boolean = false;
-
 export default function Home() {
   const [phase, setPhase] = useState<Phase>('booting');
 
   useEffect(() => {
-    const seen = sessionStorage.getItem('seenTypewriter');
-    if (seen === 'true') {
-      setPhase('projects');
-    } else {
-      setPhase('booting');
-      sessionStorage.setItem('seenTypewriter', 'true');
-    }
+    queueMicrotask(() => {
+      const seen = sessionStorage.getItem('seenTypewriter');
+      if (seen === 'true') {
+        setPhase('projects');
+      } else {
+        sessionStorage.setItem('seenTypewriter', 'true');
+      }
+    });
   }, []);
 
   const skip = () => {
@@ -53,10 +52,6 @@ export default function Home() {
 
     return () => clearTimeout(timeout);
   }, [phase]);
-
-  useEffect(() => {
-    if (dev) setPhase('projects');
-  }, []);
 
   if (phase === 'booting') {
     return (
@@ -93,7 +88,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-background text-foreground flex items-center justify-center p-6 md:p-12">
       <div className="w-full max-w-screen-2xl flex flex-col md:flex-row gap-12 items-start justify-center">
-        <div className="w-full md:w-[300px]">
+        <div className="w-full md:w-[320px]">
           <Profile />
         </div>
         <div className="flex-1 flex justify-center">

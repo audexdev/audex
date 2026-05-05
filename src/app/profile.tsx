@@ -2,7 +2,7 @@
 
 import { Card, CardContent } from '@/components/ui/card';
 import { motion } from 'framer-motion';
-import { GithubIcon } from 'lucide-react';
+import { GithubIcon, NotebookText } from 'lucide-react';
 
 export default function Profile() {
   return (
@@ -11,18 +11,21 @@ export default function Profile() {
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
     >
-      <Card className="bg-muted border border-border shadow-md rounded-2xl">
-            <CardContent className="p-6 space-y-3 text-sm font-mono">
+      <Card className="bg-muted border border-border shadow-md rounded-lg">
+            <CardContent className="p-6 space-y-5 text-sm font-mono">
                 <div>
                     <div className="text-lg font-bold">audex.dev</div>
-                    <div>Developer / Audio Enthusiast / Mac Enjoyer</div>
+                    <div className="mt-1 text-muted-foreground leading-6">Developer / Audio Enthusiast / Mac Enjoyer</div>
                 </div>
-                <div>
-                    Currently building: <span className="text-muted-foreground">MiniPlayer, LAC, and more.</span>
+                <div className="leading-6">
+                    Currently logging: <span className="text-muted-foreground">local LLM tests, Apple Silicon notes, and audio experiments.</span>
                 </div>
-                <div>
-                    <a href="https://github.com/audexdev" target="_blank" rel="noopener noreferrer">
-                        <GithubIcon className="h-4 w-4" />
+                <div className="flex items-center gap-3">
+                    <a className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border hover:bg-accent" href="https://github.com/audexdev" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                        <GithubIcon className="h-4 w-4" aria-hidden="true" />
+                    </a>
+                    <a className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border hover:bg-accent" href="/blog" aria-label="Blog">
+                        <NotebookText className="h-4 w-4" aria-hidden="true" />
                     </a>
                 </div>
             </CardContent>

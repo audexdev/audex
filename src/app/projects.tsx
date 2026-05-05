@@ -1,27 +1,20 @@
 import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { motion } from 'framer-motion';
 
 const cards = [
     {
-        title: '💡 IdeaSpark',
-        desc: 'AI-powered idea generator using Gemini API.',
-        href: 'https://ideaspark.audex.dev'
+        title: 'Local Claude Code Agents on M5 Max',
+        desc: 'A controlled TypeScript benchmark for an MLX/Qwen Anthropic-compatible proxy.',
+        href: '/blog',
+        label: 'Writing'
     },
     {
-        title: '🎵 MiniPlayer',
-        desc: 'A native macOS always-on-top music mini-player for Apple Music.app.',
-        href: 'https://github.com/audexdev/MiniPlayer'
-    },
-    {
-        title: '🔊 Lossless Audio Codec',
-        desc: 'My custom C++ lossless audio codec.',
+        title: 'Lossless Audio Codec',
+        desc: 'A small C++ lossless audio codec experiment.',
         href: 'https://github.com/audexdev/Lossless-Audio-Codec',
-    }/*,
-    {
-        title: '🧪 Playground',
-        desc: 'Interactive experiments and visual tools.',
-        href: '/playground'
-    }*/
+        label: 'Project'
+    }
 ];
 
 export default function Projects() {
@@ -39,11 +32,14 @@ export default function Projects() {
                             ease: 'easeOut'
                         }}
                     >
-                        <a href={card.href} target="_blank">
-                            <Card className="w-[300px] bg-muted border border-border shadow rounded-xl hover:scale-[1.02] transition-transform">
-                                <CardContent className="p-4 space-y-2">
-                                    <h2 className="text-base font-semibold">{card.title}</h2>
-                                    <p className="text-muted-foreground text-sm">{card.desc}</p>
+                        <a href={card.href} target={card.href.startsWith('http') ? '_blank' : undefined} rel={card.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
+                            <Card className="w-[320px] min-h-[158px] bg-muted border border-border shadow rounded-lg hover:scale-[1.02] transition-transform">
+                                <CardContent className="p-5 space-y-4">
+                                    <div className="flex items-start justify-between gap-3">
+                                        <h2 className="text-base font-semibold leading-snug">{card.title}</h2>
+                                        <Badge variant="outline">{card.label}</Badge>
+                                    </div>
+                                    <p className="text-muted-foreground text-sm leading-6">{card.desc}</p>
                                 </CardContent>
                             </Card>
                         </a>
