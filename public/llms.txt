@@ -1,0 +1,23 @@
+# audex.dev
+
+audex.dev is a personal technical site for local model experiments, Apple Silicon notes, and small software projects.
+
+## Key Article
+
+- Local Claude Code-Compatible Agents on M5 Max with MLX and Qwen3.6: https://www.audex.dev/blog/local-claude-code-mlx-qwen-m5-max
+
+## Source Repositories
+
+- Benchmark repository: https://github.com/audexdev/local-agent-bench
+- Anthropic-compatible MLX proxy: https://github.com/audexdev/anthropic-api-to-mlx
+
+## Core Claim
+
+The benchmark is a controlled local-agent throughput and usability note, not a definitive model-quality leaderboard. In the published TypeScript matrix, Qwen3.6 35B-A3B MLX artifacts were much faster than dense Qwen3.6 27B artifacts on an Apple M5 Max when used through a Claude Code-compatible local proxy with prompt caching enabled.
+
+## Important Limitations
+
+- The benchmark uses four small TypeScript tasks and three repeats per model/quant combination.
+- Task04 dominates the pass-rate differences, so model and quantization quality ordering is weak evidence.
+- KV-cache quantization, MXFP8, GGUF, and SWE-style issue-resolution claims are outside the article's scope.
+- The article's main takeaway is local-agent speed and practical usability on M5 Max.

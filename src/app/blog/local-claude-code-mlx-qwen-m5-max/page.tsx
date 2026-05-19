@@ -4,10 +4,54 @@ import { ArrowLeft, ExternalLink } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 
+const articleUrl = "https://www.audex.dev/blog/local-claude-code-mlx-qwen-m5-max";
+const articleTitle = "Local Claude Code-Compatible Agents on M5 Max with MLX and Qwen3.6";
+const articleDescription =
+  "A controlled TypeScript benchmark of local Claude Code-compatible agents on an M5 Max using MLX, Qwen3.6, prompt caching, and an Anthropic-compatible proxy.";
+const articlePublishedAt = "2026-05-05T00:00:00+09:00";
+const articleUpdatedAt = "2026-05-05T00:00:00+09:00";
+const articleKeywords = [
+  "Claude Code",
+  "MLX",
+  "Qwen3.6",
+  "M5 Max",
+  "local coding agents",
+  "Anthropic-compatible proxy",
+  "Apple Silicon LLM",
+];
+const ogImage = "/blog/local-claude-code-mlx-qwen-m5-max/opengraph-image";
+
 export const metadata: Metadata = {
-  title: "Local Claude Code-Compatible Agents on M5 Max",
-  description:
-    "Preliminary controlled TypeScript benchmark results for a local Anthropic-compatible Claude Code proxy backed by MLX and Qwen3.6.",
+  title: articleTitle,
+  description: articleDescription,
+  keywords: articleKeywords,
+  alternates: {
+    canonical: "/blog/local-claude-code-mlx-qwen-m5-max",
+  },
+  openGraph: {
+    title: articleTitle,
+    description: articleDescription,
+    url: articleUrl,
+    type: "article",
+    publishedTime: articlePublishedAt,
+    modifiedTime: articleUpdatedAt,
+    authors: ["audex"],
+    images: [
+      {
+        url: ogImage,
+        width: 1200,
+        height: 630,
+        alt: "Local Claude Code agents on M5 Max with MLX and Qwen3.6",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: articleTitle,
+    description: articleDescription,
+    creator: "@audexdev",
+    images: [ogImage],
+  },
 };
 
 const mainResults = [
@@ -26,6 +70,34 @@ const taskResults = [
   ["35b-a3b-4bit", "3/3", "3/3", "3/3", "0/3"],
   ["35b-a3b-mxfp4", "3/3", "3/3", "3/3", "0/3"],
   ["35b-a3b-nvfp4", "3/3", "3/3", "3/3", "0/3"],
+];
+
+const faqItems = [
+  {
+    question: "Can Claude Code run locally with MLX?",
+    answer:
+      "Claude Code can use a local MLX-backed model through an Anthropic-compatible proxy. This benchmark used anthropic-api-to-mlx to map Claude Code requests to mlx_lm and Qwen3.6.",
+  },
+  {
+    question: "Was Qwen3.6 35B-A3B faster than dense 27B?",
+    answer:
+      "Yes, in this controlled TypeScript benchmark on an M5 Max. The 35B-A3B variants averaged about 30-37 seconds per run, while the dense 27B variants averaged about 120-146 seconds.",
+  },
+  {
+    question: "Is this a model-quality benchmark?",
+    answer:
+      "No. The benchmark is a local-agent throughput and usability note. It includes pass counts for context, but it is not a definitive model-quality leaderboard.",
+  },
+  {
+    question: "Did the main benchmark use KV-cache quantization?",
+    answer:
+      "No. KV-cache quantization was intentionally excluded from the main matrix. The main runs used MLX model quantizations only.",
+  },
+  {
+    question: "What made prompt caching important?",
+    answer:
+      "Claude Code sends long, overlapping conversations across turns. Exact token-prefix prompt caching avoids repeated full-prefill work and makes the local agent loop much more usable.",
+  },
 ];
 
 const mlxArtifacts = [
@@ -72,6 +144,79 @@ function hfRevisionUrl(repo: string, revision: string) {
 function benchUrl(path: string) {
   return `https://github.com/audexdev/local-agent-bench/blob/main/${path}`;
 }
+
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: articleTitle,
+    description: articleDescription,
+    url: articleUrl,
+    mainEntityOfPage: articleUrl,
+    datePublished: articlePublishedAt,
+    dateModified: articleUpdatedAt,
+    author: {
+      "@type": "Person",
+      name: "audex",
+      url: "https://www.audex.dev",
+    },
+    publisher: {
+      "@type": "Person",
+      name: "audex",
+      url: "https://www.audex.dev",
+    },
+    image: `${articleUrl}/opengraph-image`,
+    keywords: articleKeywords,
+    about: [
+      "Claude Code-compatible local agents",
+      "MLX inference on Apple Silicon",
+      "Qwen3.6 local coding agent benchmark",
+      "Anthropic-compatible MLX proxy",
+    ],
+    mentions: [
+      "https://github.com/audexdev/local-agent-bench",
+      "https://github.com/audexdev/anthropic-api-to-mlx",
+      benchUrl("results/PRIMARY_MATRIX_20260504.md"),
+      benchUrl("results/SUMMARY.md"),
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "audex.dev",
+        item: "https://www.audex.dev",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Blog",
+        item: "https://www.audex.dev/blog",
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: articleTitle,
+        item: articleUrl,
+      },
+    ],
+  },
+];
 
 function Section({
   id,
@@ -177,6 +322,10 @@ function ExternalAnchor({ href, children }: { href: string; children: React.Reac
 export default function LocalClaudeCodeMlxQwenM5MaxPage() {
   return (
     <main className="min-h-screen bg-background px-6 py-10 text-foreground md:px-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <article className="mx-auto flex w-full max-w-4xl flex-col gap-9">
         <header className="space-y-7">
           <Link className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground" href="/blog">
@@ -186,7 +335,6 @@ export default function LocalClaudeCodeMlxQwenM5MaxPage() {
 
           <div className="space-y-4">
             <div className="flex flex-wrap gap-2">
-              <Badge variant="outline">Part 1</Badge>
               <Badge variant="outline">Preliminary</Badge>
               <Badge variant="outline">M5 Max</Badge>
             </div>
@@ -224,6 +372,19 @@ export default function LocalClaudeCodeMlxQwenM5MaxPage() {
               I would not read this as a model-quality leaderboard. The benchmark has only four tasks,
               three repeats, and one discriminator task. The robust signal is speed and local-agent
               feasibility. The quality signal is included only as context for the pass counts.
+            </p>
+          </div>
+        </Section>
+
+        <Section id="what-this-shows" title="What This Shows">
+          <div className="space-y-4 text-sm leading-7 text-muted-foreground md:text-base">
+            <p>
+              This benchmark shows local Claude Code-compatible agent throughput on an M5 Max
+              using MLX and Qwen3.6.
+            </p>
+            <p>
+              It does not establish a general model-quality ranking. The clearest result is that
+              Qwen3.6 35B A3B was much faster than dense 27B in this setup.
             </p>
           </div>
         </Section>
@@ -461,12 +622,48 @@ export default function LocalClaudeCodeMlxQwenM5MaxPage() {
               </ExternalAnchor>
               .
             </p>
+            <div className="rounded-lg border border-border bg-muted p-5">
+              <h3 className="mb-3 text-base font-semibold text-foreground">Related source repos</h3>
+              <ul className="list-disc space-y-2 pl-5">
+                <li>
+                  <ExternalAnchor href="https://github.com/audexdev/local-agent-bench">
+                    Benchmark repo
+                  </ExternalAnchor>
+                </li>
+                <li>
+                  <ExternalAnchor href="https://github.com/audexdev/anthropic-api-to-mlx">
+                    Proxy repo
+                  </ExternalAnchor>
+                </li>
+                <li>
+                  <ExternalAnchor href={benchUrl("results/PRIMARY_MATRIX_20260504.md")}>
+                    Primary matrix
+                  </ExternalAnchor>
+                </li>
+                <li>
+                  <ExternalAnchor href={benchUrl("results/SUMMARY.md")}>
+                    Full summary
+                  </ExternalAnchor>
+                </li>
+              </ul>
+            </div>
             <pre className="overflow-x-auto rounded-lg border border-border bg-muted p-4 text-xs text-foreground">
 {`git clone https://github.com/audexdev/local-agent-bench
 cd local-agent-bench
 cat BENCH_PROTOCOL.md
 cat results/PRIMARY_MATRIX_20260504.md`}
             </pre>
+          </div>
+        </Section>
+
+        <Section id="faq" title="FAQ">
+          <div className="space-y-5 text-sm leading-7 text-muted-foreground md:text-base">
+            {faqItems.map((item) => (
+              <div key={item.question} className="space-y-2">
+                <h3 className="text-base font-semibold text-foreground">{item.question}</h3>
+                <p>{item.answer}</p>
+              </div>
+            ))}
           </div>
         </Section>
 
